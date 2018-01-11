@@ -7,10 +7,20 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.0-alpha07'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.1'
+
     }
 }
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.unverbraucht'
+
+def isSnapshot() {
+    return "false"
+}
 
 android {
     compileSdkVersion 27
@@ -20,7 +30,10 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
-        versionName '0.1.10'
+        versionName '0.1.9'
+
+        // workaround for https://code.google.com/p/android/issues/detail?id=52962
+        buildConfigField 'boolean', 'SNAPSHOT', isSnapshot()
     }
 
     lintOptions {
@@ -29,15 +42,8 @@ android {
 }
 
 repositories {
-    jcenter()
     mavenLocal()
-    maven { url "https://jitpack.io" }
+    mavenCentral()
+    jcenter()
     google()
-}
-
-
-
-dependencies {
-    compile 'com.android.support:appcompat-v7:27.0.2'
-    compile project(':fonticon-lib')
 }
